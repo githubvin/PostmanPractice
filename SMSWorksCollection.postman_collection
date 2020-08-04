@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "8d68509b-4210-4121-869b-f294e0c4e71d",
+		"name": "SMS Works Collection",
+		"description": "Practice Project. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create JWT Authorization",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"customerid\": \"72ac-a980-cad5-48a4-a5d3-02322104eeba\",\r\n  \"key\": \"4fa223d7-33c7-4f75-869b-921e8e86ce1f\",\r\n  \"secret\": \"8ebcfc4600d8f23d30074aa8a3a6965de79f60e630513d13b705dd4db00a0a1d\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "https://api.thesmsworks.co.uk/v1/auth/token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thesmsworks",
+						"co",
+						"uk"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Single Message",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI0ZmEyMjNkNy0zM2M3LTRmNzUtODY5Yi05MjFlOGU4NmNlMWYiLCJzZWNyZXQiOiI4ZWJjZmM0NjAwZDhmMjNkMzAwNzRhYThhM2E2OTY1ZGU3OWY2MGU2MzA1MTNkMTNiNzA1ZGQ0ZGIwMGEwYTFkIiwiaWF0IjoxNTk2Mzc1NTAyLCJleHAiOjIzODQ3NzU1MDJ9.eZlcZSTLgETbIyVdRnxaFesPknKfyd7-kwvuOCi0V8Q",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sender\": \"Vin Company\",\r\n  \"destination\": \"447777777777\",\r\n  \"content\": \"My awesome message from SMS Work REST API - Vinothkumar\",\r\n  \"tag\": \"RestPractice\", \r\n  \"schedule\": \"Wed Aug 04 2020 10:26:28 GMT+0100 (BST)\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.thesmsworks.co.uk/v1/message/send",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thesmsworks",
+						"co",
+						"uk"
+					],
+					"path": [
+						"v1",
+						"message",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Send Batch message and Cancel same",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2fca7f08-5adb-4639-942b-38326b3f6f4f",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var batchMsg = resp.status; \r",
+							"\r",
+							"var batchID = resp.batchid; \r",
+							"\r",
+							"console.log(batchMsg + \" \" + batchID); \r",
+							"\r",
+							"pm.globals.set(\"sms_msg_id\", batchID); \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI0ZmEyMjNkNy0zM2M3LTRmNzUtODY5Yi05MjFlOGU4NmNlMWYiLCJzZWNyZXQiOiI4ZWJjZmM0NjAwZDhmMjNkMzAwNzRhYThhM2E2OTY1ZGU3OWY2MGU2MzA1MTNkMTNiNzA1ZGQ0ZGIwMGEwYTFkIiwiaWF0IjoxNTk2Mzc1NTAyLCJleHAiOjIzODQ3NzU1MDJ9.eZlcZSTLgETbIyVdRnxaFesPknKfyd7-kwvuOCi0V8Q",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sender\": \"Vin Company\",\r\n  \"destinations\": [\r\n    \"447777777778\",\r\n    \"447777777779\"\r\n  ],\r\n  \"content\": \"My super awesome batch message\",\r\n  \"deliveryreporturl\": \"http://your.domain.com/delivery/report/path\",\r\n  \"schedule\": \"Wed Aug 05 2020 10:28:28 GMT+0100 (BST)\",\r\n  \"tag\": \"SummerSpecial\",\r\n  \"ttl\": 10\r\n}"
+				},
+				"url": {
+					"raw": "https://api.thesmsworks.co.uk/v1/batch/send",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thesmsworks",
+						"co",
+						"uk"
+					],
+					"path": [
+						"v1",
+						"batch",
+						"send"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Message by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI0ZmEyMjNkNy0zM2M3LTRmNzUtODY5Yi05MjFlOGU4NmNlMWYiLCJzZWNyZXQiOiI4ZWJjZmM0NjAwZDhmMjNkMzAwNzRhYThhM2E2OTY1ZGU3OWY2MGU2MzA1MTNkMTNiNzA1ZGQ0ZGIwMGEwYTFkIiwiaWF0IjoxNTk2Mzc1NTAyLCJleHAiOjIzODQ3NzU1MDJ9.eZlcZSTLgETbIyVdRnxaFesPknKfyd7-kwvuOCi0V8Q",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.thesmsworks.co.uk/v1/batch/{{sms_msg_id}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thesmsworks",
+						"co",
+						"uk"
+					],
+					"path": [
+						"v1",
+						"batch",
+						"{{sms_msg_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Batch SMS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1aaee9be-f6ec-452a-8c13-4c018f800ff2",
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI0ZmEyMjNkNy0zM2M3LTRmNzUtODY5Yi05MjFlOGU4NmNlMWYiLCJzZWNyZXQiOiI4ZWJjZmM0NjAwZDhmMjNkMzAwNzRhYThhM2E2OTY1ZGU3OWY2MGU2MzA1MTNkMTNiNzA1ZGQ0ZGIwMGEwYTFkIiwiaWF0IjoxNTk2Mzc1NTAyLCJleHAiOjIzODQ3NzU1MDJ9.eZlcZSTLgETbIyVdRnxaFesPknKfyd7-kwvuOCi0V8Q",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.thesmsworks.co.uk/v1/batches/schedule/{{sms_sch_id}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thesmsworks",
+						"co",
+						"uk"
+					],
+					"path": [
+						"v1",
+						"batches",
+						"schedule",
+						"{{sms_sch_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Schedule Batch Message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dd1b3945-ea7d-4b0e-a22f-1809737d9053",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var schMsgID = resp.batchid; \r",
+							"\r",
+							"pm.globals.set(\"sms_sch_id\", schMsgID);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXkiOiI0ZmEyMjNkNy0zM2M3LTRmNzUtODY5Yi05MjFlOGU4NmNlMWYiLCJzZWNyZXQiOiI4ZWJjZmM0NjAwZDhmMjNkMzAwNzRhYThhM2E2OTY1ZGU3OWY2MGU2MzA1MTNkMTNiNzA1ZGQ0ZGIwMGEwYTFkIiwiaWF0IjoxNTk2Mzc1NTAyLCJleHAiOjIzODQ3NzU1MDJ9.eZlcZSTLgETbIyVdRnxaFesPknKfyd7-kwvuOCi0V8Q",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"sender\": \"Vin Company\",\r\n  \"destinations\": [\r\n    \"447777777777\",\r\n    \"447777777778\",\r\n    \"447777777779\"\r\n  ],\r\n  \"content\": \"My super awesome batch message\",\r\n  \"deliveryreporturl\": \"http://your.domain.com/delivery/report/path\",\r\n  \"schedule\": \"Wed Jul 19 2017 20:26:28 GMT+0100 (BST)\",\r\n  \"tag\": \"SummerSpecial\",\r\n  \"ttl\": 10\r\n}"
+				},
+				"url": {
+					"raw": "https://api.thesmsworks.co.uk/v1/batch/schedule",
+					"protocol": "https",
+					"host": [
+						"api",
+						"thesmsworks",
+						"co",
+						"uk"
+					],
+					"path": [
+						"v1",
+						"batch",
+						"schedule"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "47508b9d-ba8b-47c1-8610-d280742b1cce",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "a5c6d6f4-c8fa-43dc-9558-6c7b3ba8ebfe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
