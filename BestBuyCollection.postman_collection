@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "cacf9c80-060b-45ba-b389-1d94b9113bff",
+		"name": "BestBuy Collection",
+		"description": "Practice project on Bestbuy. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Find Store with zip",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/stores(postalCode=55423)?format=json&show=storeId,storeType,name,city,region&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"stores(postalCode=55423)"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "storeId,storeType,name,city,region"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Canon Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc9a9a39-f8af-4402-858d-39347ed9f02f",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var count = resp.products.length; \r",
+							"console.log(\"Total Products fetched: \"+count); \r",
+							"\r",
+							"for(var i = 0; i < count; i++) { \r",
+							"   if (resp.products[i].salePrice > 1000) {\r",
+							"       console.log(resp.products[i]); \r",
+							"   } \r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/products(manufacturer=canon)?format=json&show=sku,name,salePrice&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"products(manufacturer=canon)"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "sku,name,salePrice"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get iPhone Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/products(search=iphone 11 pro)?format=json&show=sku,name,salePrice&apiKey=qUh3qMK14GdwAs9bO59QRSCJ",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"products(search=iphone 11 pro)"
+					],
+					"query": [
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "sku,name,salePrice"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "In-Store availability in RI Region",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.bestbuy.com/v1/products(inStorePickup=true&search=iphone 11 pro)?show=storeId,storeType,name,city&region=ri&apiKey=qUh3qMK14GdwAs9bO59QRSCJ&format=json&show=sku,name,salePrice,inStorePickup,platform",
+					"protocol": "https",
+					"host": [
+						"api",
+						"bestbuy",
+						"com"
+					],
+					"path": [
+						"v1",
+						"products(inStorePickup=true&search=iphone 11 pro)"
+					],
+					"query": [
+						{
+							"key": "show",
+							"value": "storeId,storeType,name,city"
+						},
+						{
+							"key": "name",
+							"value": "(iPhone 11 pro)",
+							"disabled": true
+						},
+						{
+							"key": "region",
+							"value": "ri"
+						},
+						{
+							"key": "apiKey",
+							"value": "qUh3qMK14GdwAs9bO59QRSCJ"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "show",
+							"value": "sku,name,salePrice,inStorePickup,platform"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
