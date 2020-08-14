@@ -1,0 +1,383 @@
+{
+	"info": {
+		"_postman_id": "a9084782-b392-4635-8749-fa1495d50208",
+		"name": "TomTom Collection",
+		"description": "Practice project. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register Admin Key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "75059ab6-082a-40f5-bf52-0df1b5287dd4",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"secret\": \"Another secret\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/register?key={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"register"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Project ",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5b77911-acf6-4c84-9bab-fab0241ed5e5",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var projId = resp.id; \r",
+							"\r",
+							"console.log(projId); \r",
+							"\r",
+							"pm.globals.set(\"tomtom_projId\", projId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Sample Project4\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/projects/project?key={{api_key}}&adminKey={{admin_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects",
+						"project"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						},
+						{
+							"key": "adminKey",
+							"value": "{{admin_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Regenerate Admin Key ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"secret\": \"First Secret\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/regenerateKey?key={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"regenerateKey"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57003b39-eb5a-4f0e-b481-0480f7c34878",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var count = resp.projects.length; \r",
+							"console.log(count); \r",
+							"\r",
+							"var projId = pm.globals.get(\"tomtom_projId\");\r",
+							"\r",
+							"for (var i = 0; i < count; i++) {\r",
+							"    if(resp.projects[i].id = projId) {\r",
+							"    }\r",
+							"} \r",
+							"console.log(\"Project found: \" + projId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/projects?key={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Fence to Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8dfa0fea-d0b0-47be-9a50-774078880735",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var fenceId = resp.id; \r",
+							"console.log(fenceId); \r",
+							"\r",
+							"pm.globals.set(\"tomtom_fenceId\", fenceId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Sample Fence5\",\r\n  \"type\": \"Feature\",\r\n  \"geometry\": {\r\n    \"radius\": 10,\r\n    \"type\": \"Point\",\r\n    \"shapeType\": \"Circle\",\r\n    \"coordinates\": [9.9252, 78.1198]\r\n  },\r\n  \"properties\": {\r\n    \"key\": \"value\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/projects/{{tomtom_projId}}/fence?key={{api_key}}&adminKey={{admin_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects",
+						"{{tomtom_projId}}",
+						"fence"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						},
+						{
+							"key": "adminKey",
+							"value": "{{admin_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Fence Details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/fences/{{tomtom_fenceId}}?key={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"fences",
+						"{{tomtom_fenceId}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Fences of Project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bce5a11e-45a4-47ae-a4cd-003309d5e6aa",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"\r",
+							"var addedFence = pm.globals.get(\"tomtom_fenceId\"); \r",
+							"\r",
+							"var count = resp.fences.length; \r",
+							"\r",
+							"for(var i = 0; i < count; i++) {\r",
+							"    if (resp.fences[i].id = addedFence) {\r",
+							"\r",
+							"    }\r",
+							"} \r",
+							"console.log(\"Fence is displayed: \" + addedFence);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/geofencing/1/projects/{{tomtom_projId}}/fences?key={{api_key}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"geofencing",
+						"1",
+						"projects",
+						"{{tomtom_projId}}",
+						"fences"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "875d5acd-77f9-42de-b7bf-2856893c244e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0b62e49f-1090-4efb-8723-ce5262a2a19c",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "9beafef7-d9fe-4243-bf87-9c44f738a92a",
+			"key": "api_key",
+			"value": ""
+		},
+		{
+			"id": "755c68d7-790f-492f-92e6-adbc7d67afdf",
+			"key": "baseUrl",
+			"value": ""
+		},
+		{
+			"id": "545d5799-a763-45e5-bf35-2469a55ff49f",
+			"key": "admin_key",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
