@@ -1,0 +1,660 @@
+{
+	"info": {
+		"_postman_id": "3f51c832-f80e-41b5-a85f-1a2e525026da",
+		"name": "FreshBooks Collection ",
+		"description": "Practice project. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Time Entry Chaining",
+			"item": [
+				{
+					"name": "Create a Time Entry  Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1f7fe41d-fd66-4f92-8250-1bea469daab7",
+								"exec": [
+									"var resp = pm.response.json() \r",
+									"console.log(resp); \r",
+									"\r",
+									"var clientId = resp.time_entry.id; \r",
+									"console.log(clientId); \r",
+									"\r",
+									"pm.globals.set(\"freshbook_timeid\", clientId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"time_entry\": {\r\n        \"is_logged\": true,\r\n        \"duration\": 7200,\r\n        \"note\": \"Stuff\",\r\n        \"started_at\": \"2020-08-16T20:00:00.000Z\",\r\n        \"client_id\": \"96623\",\r\n        \"project_id\": \"4907161\"\r\n    }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.freshbooks.com/timetracking/business/{{freshbook_busid}}/time_entries",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"timetracking",
+								"business",
+								"{{freshbook_busid}}",
+								"time_entries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Time Entries Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.freshbooks.com/timetracking/business/{{freshbook_busid}}/time_entries",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"timetracking",
+								"business",
+								"{{freshbook_busid}}",
+								"time_entries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Time Entry Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"time_entry\": {\r\n      \"is_logged\": true,\r\n      \"duration\": 600,\r\n      \"note\": \"Updated Note for sample\",\r\n      \"started_at\": \"2020-08-16T20:00:00.000Z\",\r\n      \"timer\": {\r\n          \"id\": \"2936\"\r\n      },\r\n      \"client_id\": \"96623\",\r\n      \"project_id\": \"4907161\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.freshbooks.com/timetracking/business/{{freshbook_busid}}/time_entries/{{freshbook_timeid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"timetracking",
+								"business",
+								"{{freshbook_busid}}",
+								"time_entries",
+								"{{freshbook_timeid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Time Entry Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.freshbooks.com/timetracking/business/{{freshbook_busid}}/time_entries/{{freshbook_timeid}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"timetracking",
+								"business",
+								"{{freshbook_busid}}",
+								"time_entries",
+								"{{freshbook_timeid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Estimate Entry Chaining",
+			"item": [
+				{
+					"name": "Create Single Estimate with Single Line Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a3ba6f1d-c6e7-4ea8-9d3b-9c2dff5c9735",
+								"exec": [
+									"var resp = pm.response.json(); \r",
+									"console.log(resp); \r",
+									"\r",
+									"var estId = resp.response.result.estimate.estimateid; \r",
+									"console.log(estId); \r",
+									"\r",
+									"pm.globals.set(\"freshbook_estId\", estId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estimate\": {\r\n    \"email\": \"test@example.com\",\r\n    \"customerid\": 96623,\r\n    \"create_date\": \"2016-04-04\",\r\n    \"lines\": [\r\n      {\r\n        \"type\": 0,\r\n        \"description\": \"\",\r\n        \"taxName1\": \"\",\r\n        \"taxAmount1\": 0,\r\n        \"name\": \"Paperwork\",\r\n        \"qty\": 1,\r\n        \"taxName2\": \"\",\r\n        \"taxAmount2\": 0,\r\n        \"unit_cost\": {\r\n            \"amount\": \"5000.00\",\r\n            \"code\": \"USD\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.freshbooks.com/accounting/account/eOa5zO/estimates/estimates",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"accounting",
+								"account",
+								"eOa5zO",
+								"estimates",
+								"estimates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Single Estimate",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"estimate\": {\r\n     \"customerid\": 96623,\r\n     \"create_date\": \"2016-04-04\", \r\n     \"city\": \"Madurai\",\r\n     \"code\": \"INDIA\"\r\n  }\r\n}"
+						},
+						"url": {
+							"raw": "https://api.freshbooks.com/accounting/account/eOa5zO/estimates/estimates/{{freshbook_estId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"accounting",
+								"account",
+								"eOa5zO",
+								"estimates",
+								"estimates",
+								"{{freshbook_estId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Estimate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f8b52f34-70b0-444a-96a4-700745a1cb5e",
+								"exec": [
+									"var resp = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"Madurai\");\r",
+									"}); \r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://api.freshbooks.com/accounting/account/eOa5zO/estimates/estimates/{{freshbook_estId}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"freshbooks",
+								"com"
+							],
+							"path": [
+								"accounting",
+								"account",
+								"eOa5zO",
+								"estimates",
+								"estimates",
+								"{{freshbook_estId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Get Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"grant_type\": \"authorization_code\",\r\n    \"client_secret\": \"7e6ff499c88993a6ba7d943bc93f6dd459ccd06f84b5760c6a85d577ffabc347\",\r\n    \"code\": \"57af4fa6cff34ab437de919855768c6ee8dadb04cc60f3cf6a046b6b6e00e4f0\",\r\n    \"client_id\": \"7e7030ea012715616e74697a1c88742a93dbb3b34a7879bd295673d7fa8c293c\",\r\n    \"redirect_uri\": \"https://vinapp.com/redirect\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/auth/oauth/token",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"auth",
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Refresh Token",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"client_id\": \"7e7030ea012715616e74697a1c88742a93dbb3b34a7879bd295673d7fa8c293c\",\r\n   \"client_secret\": \"7e6ff499c88993a6ba7d943bc93f6dd459ccd06f84b5760c6a85d577ffabc347\",\r\n   \"token\": \"d73708d2be2bfcfc42ac735c8a45f0d27aa7b2f58ae04738a3feacb0ce5e45ac\", \r\n   \"grant_type\": \"refresh_token\"\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/auth/oauth/revoke",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"auth",
+						"oauth",
+						"revoke"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Time Entries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.freshbooks.com/timetracking/business/4162167/time_entries",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"timetracking",
+						"business",
+						"4162167",
+						"time_entries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"project\": {\r\n    \"title\": \"My First Project\",\r\n    \"client_id\": \"96623\",\r\n    \"project_type\": \"fixed_price\",\r\n    \"fixed_price\": \"500\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/projects/business/4162167/projects",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"projects",
+						"business",
+						"4162167",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Client",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client\": {\r\n        \"email\": \"vinothksc@gmail.com\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/accounting/account/eOa5zO/users/clients",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"accounting",
+						"account",
+						"eOa5zO",
+						"users",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Projects",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.freshbooks.com/auth/api/v1/users/me",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"auth",
+						"api",
+						"v1",
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Time Entry ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"time_entry\": {\r\n        \"is_logged\": true,\r\n        \"duration\": 7200,\r\n        \"note\": \"Stuff\",\r\n        \"started_at\": \"2020-08-16T20:00:00.000Z\",\r\n        \"client_id\": \"96623\",\r\n        \"project_id\": \"4907161\"\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/timetracking/business/4162167/time_entries",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"timetracking",
+						"business",
+						"4162167",
+						"time_entries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Time Entry",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"time_entry\": {\r\n      \"is_logged\": true,\r\n      \"duration\": 600,\r\n      \"note\": \"Updated Note for sample\",\r\n      \"started_at\": \"2020-08-16T20:00:00.000Z\",\r\n      \"timer\": {\r\n          \"id\": \"2936\"\r\n      },\r\n      \"client_id\": \"96623\",\r\n      \"project_id\": \"4907161\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/timetracking/business/4162167/time_entries/85437505",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"timetracking",
+						"business",
+						"4162167",
+						"time_entries",
+						"85437505"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Time Entry",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://api.freshbooks.com/timetracking/business/4162167/time_entries/85437505",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"timetracking",
+						"business",
+						"4162167",
+						"time_entries",
+						"85437505"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Single Estimate with Single Line",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06365212-bae3-4216-9abb-d87a2f348576",
+						"exec": [
+							"var resp = pm.response.json(); \r",
+							"console.log(resp); \r",
+							"\r",
+							"var estId = resp.response.result.estimate.estimateid; \r",
+							"console.log(estId); \r",
+							"\r",
+							"pm.globals.set(\"freshbook_estId\", estId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"estimate\": {\r\n    \"email\": \"test@example.com\",\r\n    \"customerid\": 96623,\r\n    \"create_date\": \"2016-04-04\",\r\n    \"lines\": [\r\n      {\r\n        \"type\": 0,\r\n        \"description\": \"\",\r\n        \"taxName1\": \"\",\r\n        \"taxAmount1\": 0,\r\n        \"name\": \"Paperwork\",\r\n        \"qty\": 1,\r\n        \"taxName2\": \"\",\r\n        \"taxAmount2\": 0,\r\n        \"unit_cost\": {\r\n            \"amount\": \"5000.00\",\r\n            \"code\": \"USD\"\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://api.freshbooks.com/accounting/account/eOa5zO/estimates/estimates",
+					"protocol": "https",
+					"host": [
+						"api",
+						"freshbooks",
+						"com"
+					],
+					"path": [
+						"accounting",
+						"account",
+						"eOa5zO",
+						"estimates",
+						"estimates"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "b6087492f9cc5ba8e38a68aeafd19ea73e50b5d50160d9dff5f8c9f894554dab",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d4049ddc-03fd-48e3-9019-21bd0d1691eb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b91aa870-369b-40af-b3bf-bbc005fbf797",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
