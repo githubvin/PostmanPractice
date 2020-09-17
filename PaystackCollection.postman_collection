@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "be922051-f7e1-420c-a421-3c06af48c9ab",
+		"name": "Paystack Collection",
+		"description": "Practice Project. ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Payment Page",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"First Page\",\r\n    \"amount\": 500000,\r\n    \"description\": \"This page is created through API\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/page",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"page"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Payment Page",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseServer}}/page",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"page"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Payment Page",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseServer}}//page/324402",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"",
+						"page",
+						"324402"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customer\": \"CUS_sxwmebrvdrrplkn\",\r\n    \"plan\": \"PLN_g2jez30mj4pe7mx\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/subscription",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"subscription"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"email\": \"customer@test.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/customer",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Plan",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Monthly retainer\",\r\n    \"interval\": \"monthly\",\r\n    \"amount\": \"500000\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/plan",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"plan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Whitelist/Blacklist Customer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"customer\": \"CUS_f22yd8y1lrvbn7r\", \r\n    \"risk_action\": \"allow\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/set_risk_action",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"set_risk_action"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initialize Transaction",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n    \"email\": \"customer@test.com\", \r\n    \"amount\": \"500000\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/transaction/initialize",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"transaction",
+						"initialize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable Subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"SUB_vqbmd3h77tpe1ck\",\r\n    \"token\": \"3laa07ekwpaandk\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/subscription/enable",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"subscription",
+						"enable"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable Subscription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"SUB_vqbmd3h77tpe1ck\",\r\n    \"token\": \"3laa07ekwpaandk\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseServer}}/subscription/disable",
+					"host": [
+						"{{baseServer}}"
+					],
+					"path": [
+						"subscription",
+						"disable"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "sk_test_37bdb097bad165af7af5277dfaddf27504851908",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cae111d0-a5ee-4440-bca1-ffdc3000c3ce",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "d9aaadc3-4f4c-4164-b2be-c1ba75687ddb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "13358793-de1d-4a8f-b98d-893bd3557a1a",
+			"key": "baseServer",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
